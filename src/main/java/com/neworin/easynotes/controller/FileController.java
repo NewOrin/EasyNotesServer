@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,8 +39,8 @@ public class FileController {
         return ResponseUtil.parseSuccessRespJson();
     }
 
-    @RequestMapping("/get_user_avatar")
-    public ResponseEntity<byte[]> fileDownload(@RequestParam String email) throws IOException {
+    @RequestMapping(value = "/get_user_avatar{email}", produces = "text/html;charset=UTF-8")
+    public ResponseEntity<byte[]> fileDownload(@PathVariable String email) throws IOException {
         File file = mFileServiceImpl.getUserAvatar(email);
         System.out.println("file_name = " + file.getName());
         HttpHeaders headers = new HttpHeaders();
