@@ -1,48 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+    <substitutionProperty name="logbase" value="${catalina.home}/logs/easynotes" />
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
 
-<!-- For assistance related to logback-translator or configuration  -->
-<!-- files in general, please contact the logback user mailing list -->
-<!-- at http://www.qos.ch/mailman/listinfo/logback-user             -->
-<!--                                                                -->
-<!-- For professional support please see                            -->
-<!--    http://www.qos.ch/shop/products/professionalSupport         -->
-<!--                                                                -->
-<configuration>
-    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
-        <Target>System.out</Target>
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <Encoding>UTF-8</Encoding>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <File>${logbase}/%d{yyyy-MM-dd}.log</File>
+            <FileNamePattern>${logbase}/%d{yyyy-MM-dd}.log.zip</FileNamePattern>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>10MB</MaxFileSize>
+        </triggeringPolicy>
         <encoder>
-            <pattern>[%-5p] %d{yyyy-MM-dd HH:mm:ss,SSS} method:%l%n%m%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
-    <appender name="D" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <!--See http://logback.qos.ch/manual/appenders.html#RollingFileAppender-->
-        <!--and http://logback.qos.ch/manual/appenders.html#TimeBasedRollingPolicy-->
-        <!--for further documentation-->
-        <Append>true</Append>
-        <File>H:\WORK_PLAY\EasyNotes\debug.log</File>
+
+    <appender name="daoFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <file>${logbase}/%d{yyyy-MM-dd}.dao.log</file>
+            <fileNamePattern>${logbase}/%d{yyyy-MM-dd}.dao.log</fileNamePattern>
+        </rollingPolicy>
         <encoder>
-            <pattern>%-d{yyyy-MM-dd HH:mm:ss} [ %t:%r ] - [ %p ] %m%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n</pattern>
         </encoder>
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>DEBUG</level>
-        </filter>
     </appender>
-    <appender name="E" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <!--See http://logback.qos.ch/manual/appenders.html#RollingFileAppender-->
-        <!--and http://logback.qos.ch/manual/appenders.html#TimeBasedRollingPolicy-->
-        <!--for further documentation-->
-        <File>H:\WORK_PLAY\EasyNotes\error.log</File>
-        <Append>true</Append>
+    <appender name="controllerFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <file>${logbase}/%d{yyyy-MM-dd}.controller.log</file>
+            <fileNamePattern>${logbase}/%d{yyyy-MM-dd}.controller.log</fileNamePattern>
+        </rollingPolicy>
         <encoder>
-            <pattern>%-d{yyyy-MM-dd HH:mm:ss} [ %t:%r ] - [ %p ] %m%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n</pattern>
         </encoder>
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>ERROR</level>
-        </filter>
     </appender>
-    <root level="debug">
-        <appender-ref ref="stdout"/>
-        <appender-ref ref="D"/>
-        <appender-ref ref="E"/>
+    <appender name="serviceFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <file>${logbase}/%d{yyyy-MM-dd}.service.log</file>
+            <fileNamePattern>${logbase}/%d{yyyy-MM-dd}.service.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 当root的level为debug的时候，用这个logger配置 -->
+    <logger name="com.neworin.easynotes" level="DEBUG" additivity="false">
+        <appender-ref ref="FILE" />
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+    <!-- 当root的level为debug的时候，用这个logger配置 -->
+    <logger name="com.neworin.easynotes.controller" level="DEBUG" additivity="false">
+        <appender-ref ref="controllerFILE" />
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+    <!-- 当root的level为debug的时候，用这个logger配置 -->
+    <logger name="com.neworin.easynotes.service" level="DEBUG" additivity="false">
+        <appender-ref ref="serviceFILE" />
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+    <!-- 当root的level为debug的时候，用这个logger配置 -->
+    <logger name="com.neworin.easynotes.dao" level="DEBUG" additivity="false">
+        <appender-ref ref="daoFILE" />
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+    <!-- 当root的level为error的时候，用这个logger配置 -->
+    <logger name="com.neworin.easynotes" level="ERROR" additivity="false">
+        <appender-ref ref="FILE" />
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+    <root level="DEBUG">
+        <appender-ref ref="FILE" />
+        <appender-ref ref="STDOUT" />
     </root>
 </configuration>
