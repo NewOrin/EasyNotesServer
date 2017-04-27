@@ -39,9 +39,9 @@ public class FileController {
         return ResponseUtil.parseSuccessRespJson();
     }
 
-    @RequestMapping(value = "/get_user_avatar{email}", produces = "text/html;charset=UTF-8")
-    public ResponseEntity<byte[]> fileDownload(@PathVariable String email) throws IOException {
-        File file = mFileServiceImpl.getUserAvatar(email);
+    @RequestMapping(value = "/get_user_avatar/{user_id}")
+    public ResponseEntity<byte[]> fileDownload(@PathVariable String user_id) throws IOException {
+        File file = mFileServiceImpl.getUserAvatar(user_id);
         System.out.println("file_name = " + file.getName());
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);

@@ -34,7 +34,7 @@ public class FileServiceImpl implements IFileService {
         try {
             file.transferTo(destFile); // 另存为
             System.out.println("文件保存成功:" + Constants.AVATAR_FILE_PATH + "\\" + fileName);
-            User user = mUserMapper.selectByEmail(desc);
+            User user = mUserMapper.selectByPrimaryKey(Long.parseLong(desc));
             user.setAvatarurl(Constants.AVATAR_FILE_PATH + "\\" + fileName);
             UserExample userExample = new UserExample();
             UserExample.Criteria criteria = userExample.createCriteria();
@@ -50,8 +50,8 @@ public class FileServiceImpl implements IFileService {
         return Constants.SUCCESS;
     }
 
-    public File getUserAvatar(String email) {
-        User user = mUserMapper.selectByEmail(email);
+    public File getUserAvatar(String user_id) {
+        User user = mUserMapper.selectByPrimaryKey(Long.parseLong(user_id));
         String path;
         if (null == user || user.getAvatarurl().equals("")) {
             path = Constants.DEFAULT_AVATAR_PATH;

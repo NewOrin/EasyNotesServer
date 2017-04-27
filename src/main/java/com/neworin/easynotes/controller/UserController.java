@@ -29,6 +29,7 @@ public class UserController {
             return ResponseUtil.parseFailedRespJson("邮箱或密码错误");
         }
         user.setJointime(null);
+        user.setAvatarurl(null);
         return ResponseUtil.parseSuccessRespJson(user);
     }
 
