@@ -7,5 +7,7 @@
     <mappers>
         <mapper resource="mappers/UserMapper.xml"/>
         <mapper resource="mappers/LoginRecordsMapper.xml"/>
+        <mapper resource="mappers/NoteMapper.xml"/>
+        <mapper resource="mappers/NoteBookMapper.xml"/>
     </mappers>
 </configuration>
