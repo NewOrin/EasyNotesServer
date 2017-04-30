@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.neworin.easynotes.dao.UserMapper;
 import com.neworin.easynotes.model.User;
 import com.neworin.easynotes.model.UserExample;
+import com.neworin.easynotes.service.ILoginRecords;
 import com.neworin.easynotes.service.IUserService;
 import com.neworin.easynotes.utils.DateUtil;
 import com.neworin.easynotes.utils.GenerateSequenceUtil;
@@ -26,6 +27,8 @@ public class UserServiceImpl implements IUserService {
 
     @Resource
     private UserMapper mUserMapper;
+    @Resource
+    private ILoginRecords mILoginRecordsImpl;
 
     public User userLogin(String params) {
         Gson gson = new Gson();
@@ -39,6 +42,7 @@ public class UserServiceImpl implements IUserService {
             mLogger.debug("用户名或密码错误 = " + user.getEmail() + "," + user.getPassword());
             return null;
         }
+        mILoginRecordsImpl.insertRecords(user);
         mLogger.debug("登录成功 = " + user.getEmail());
         return userList.get(0);
     }

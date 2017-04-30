@@ -6,5 +6,6 @@
     </typeAliases>
     <mappers>
         <mapper resource="mappers/UserMapper.xml"/>
+        <mapper resource="mappers/LoginRecordsMapper.xml"/>
     </mappers>
 </configuration>
