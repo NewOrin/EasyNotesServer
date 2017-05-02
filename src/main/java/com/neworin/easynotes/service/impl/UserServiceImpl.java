@@ -2,9 +2,11 @@ package com.neworin.easynotes.service.impl;
 
 import com.google.gson.Gson;
 import com.neworin.easynotes.dao.UserMapper;
+import com.neworin.easynotes.model.NoteBook;
 import com.neworin.easynotes.model.User;
 import com.neworin.easynotes.model.UserExample;
 import com.neworin.easynotes.service.ILoginRecords;
+import com.neworin.easynotes.service.INoteBookService;
 import com.neworin.easynotes.service.IUserService;
 import com.neworin.easynotes.utils.DateUtil;
 import com.neworin.easynotes.utils.GenerateSequenceUtil;
@@ -29,6 +31,8 @@ public class UserServiceImpl implements IUserService {
     private UserMapper mUserMapper;
     @Resource
     private ILoginRecords mILoginRecordsImpl;
+    @Resource
+    private INoteBookService mNoteBookServiceImpl;
 
     public User userLogin(String params) {
         Gson gson = new Gson();

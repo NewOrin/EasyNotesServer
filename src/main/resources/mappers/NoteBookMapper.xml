@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.neworin.easynotes.model.NoteBook" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="count" property="count" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, user_id, name, count, create_time, update_time, status
+    id, user_id, is_delete, name, count, create_time, update_time, status
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.neworin.easynotes.model.NoteBookExample" >
     select
@@ -92,6 +93,12 @@
     from notebook
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from notebook
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from notebook
     where id = #{id,jdbcType=BIGINT}
@@ -103,12 +110,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.neworin.easynotes.model.NoteBook" >
-    insert into notebook (id, user_id, name, 
-      count, create_time, update_time, 
-      status)
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
-      #{count,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{status,jdbcType=INTEGER})
+    insert into notebook (id, user_id, is_delete, 
+      name, count, create_time, 
+      update_time, status)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{isDelete,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{count,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.neworin.easynotes.model.NoteBook" >
     insert into notebook
@@ -118,6 +125,9 @@
       </if>
       <if test="userId != null" >
         user_id,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
       </if>
       <if test="name != null" >
         name,
@@ -141,6 +151,9 @@
       </if>
       <if test="userId != null" >
         #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=INTEGER},
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
@@ -174,6 +187,9 @@
       <if test="record.userId != null" >
         user_id = #{record.userId,jdbcType=BIGINT},
       </if>
+      <if test="record.isDelete != null" >
+        is_delete = #{record.isDelete,jdbcType=INTEGER},
+      </if>
       <if test="record.name != null" >
         name = #{record.name,jdbcType=VARCHAR},
       </if>
@@ -198,6 +214,7 @@
     update notebook
     set id = #{record.id,jdbcType=BIGINT},
       user_id = #{record.userId,jdbcType=BIGINT},
+      is_delete = #{record.isDelete,jdbcType=INTEGER},
       name = #{record.name,jdbcType=VARCHAR},
       count = #{record.count,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -212,6 +229,9 @@
     <set >
       <if test="userId != null" >
         user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=INTEGER},
       </if>
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
@@ -234,6 +254,7 @@
   <update id="updateByPrimaryKey" parameterType="com.neworin.easynotes.model.NoteBook" >
     update notebook
     set user_id = #{userId,jdbcType=BIGINT},
+      is_delete = #{isDelete,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR},
       count = #{count,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},

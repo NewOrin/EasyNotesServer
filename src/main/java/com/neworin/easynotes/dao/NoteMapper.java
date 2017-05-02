@@ -20,6 +20,8 @@ public interface NoteMapper {
 
     List<Note> selectByExample(NoteExample example);
 
+    List<Note> selectByUserId(long userId);
+
     Note selectByPrimaryKey(Long id);
 
     int updateByExampleSelective(@Param("record") Note record, @Param("example") NoteExample example);

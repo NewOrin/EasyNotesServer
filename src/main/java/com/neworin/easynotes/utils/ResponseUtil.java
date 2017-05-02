@@ -1,5 +1,6 @@
 package com.neworin.easynotes.utils;
 
+import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
 import com.neworin.easynotes.http.Response;
 
@@ -16,7 +17,7 @@ public class ResponseUtil {
     }
 
     public static String parseSuccessRespJson(Object o) {
-        return gson.toJson(getResponse().success(o));
+        return JSON.toJSONString(getResponse().success(o));
     }
 
     public static String parseSuccessRespJson() {

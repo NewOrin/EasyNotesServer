@@ -18,6 +18,8 @@ public interface NoteBookMapper {
 
     List<NoteBook> selectByExample(NoteBookExample example);
 
+    List<NoteBook> selectByUserId(Long userId);
+
     NoteBook selectByPrimaryKey(Long id);
 
     int updateByExampleSelective(@Param("record") NoteBook record, @Param("example") NoteBookExample example);

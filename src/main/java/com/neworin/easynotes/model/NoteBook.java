@@ -1,5 +1,7 @@
 package com.neworin.easynotes.model;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.util.Date;
 
 public class NoteBook {
@@ -11,11 +13,15 @@ public class NoteBook {
 
     private Integer count;
 
+    @JSONField(format="yyyy-MM-dd")
     private Date createTime;
 
+    @JSONField(format="yyyy-MM-dd")
     private Date updateTime;
 
     private Integer status;
+
+    private Integer isDelete;
 
     public Long getId() {
         return id;
@@ -71,5 +77,27 @@ public class NoteBook {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Integer isDelete) {
+        this.isDelete = isDelete;
+    }
+
+    @Override
+    public String toString() {
+        return "NoteBook{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", name='" + name + '\'' +
+                ", count=" + count +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", status=" + status +
+                ", isDelete=" + isDelete +
+                '}';
     }
 }

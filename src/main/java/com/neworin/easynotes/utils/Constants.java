@@ -13,4 +13,10 @@ public class Constants {
 
     public static final String DEFAULT_AVATAR_PATH = "H:\\EasyNotes\\avatar\\default_avatar.png";
 
+    public static final int STATUS_DEFAULT = 0; //默认
+    public static final int STATUS_ADD = 2; //新增
+    public static final int STATUS_DELETE = -1; //删除
+    public static final int STATUS_UPDATE = 1; //更新
+    public static final int STATUS_COMPLETED = 9;//同步完成
+    public static final int STATUS_FAILED = -9;//同步失败
 }

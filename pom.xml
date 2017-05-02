@@ -175,7 +175,12 @@
       <artifactId>jcl-over-slf4j</artifactId>
       <version>1.7.21</version>
     </dependency>
-
+    <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>1.2.31</version>
+    </dependency>
   </dependencies>
   <build>
     <finalName>com.neworin.easynotes</finalName>

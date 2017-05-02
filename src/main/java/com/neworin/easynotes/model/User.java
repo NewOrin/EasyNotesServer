@@ -1,5 +1,7 @@
 package com.neworin.easynotes.model;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.util.Date;
 
 public class User {
@@ -11,6 +13,7 @@ public class User {
 
     private String avatarurl;
 
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date jointime;
 
     private String nickname;

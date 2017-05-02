@@ -1,5 +1,7 @@
 package com.neworin.easynotes.model;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.util.Date;
 
 public class LoginRecords {
@@ -7,6 +9,7 @@ public class LoginRecords {
 
     private String email;
 
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date loginTime;
 
     public Integer getId() {
