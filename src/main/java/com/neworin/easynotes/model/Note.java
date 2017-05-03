@@ -13,10 +13,10 @@ public class Note {
 
     private String title;
 
-    @JSONField(format="yyyy-MM-dd")
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
-    @JSONField(format="yyyy-MM-dd")
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
     private Integer isDelete;
