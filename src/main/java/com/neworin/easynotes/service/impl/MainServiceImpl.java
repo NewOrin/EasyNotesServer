@@ -77,7 +77,7 @@ public class MainServiceImpl implements IMainService {
      */
     private void handleNoteBook(List<NoteBook> noteBooks, List<NoteBook> dbNoteBooks) {
         for (NoteBook nb : noteBooks) {
-            if (!nb.getId().equals(1)) {
+            if (!nb.getId().equals(1L)) {
                 if (isInNoteBook(nb, dbNoteBooks)) {
                     mNoteBookServiceImpl.handleNoteBook(nb);
                 } else {
