@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by NewOrin Zhang on 2017/5/1.
@@ -38,7 +40,7 @@ public class MainServiceImpl implements IMainService {
      * @return
      */
     public String handlePostData(String params) {
-        mLogger.debug("handlePostData = " + params);
+        mLogger.debug("接收到post data数据 = " + params);
         NoteAndBookList noteAndBookList = JSON.parseObject(params, NoteAndBookList.class);
         List<NoteBook> noteBookList = noteAndBookList.getNotebooks();
         List<Note> noteList = noteAndBookList.getNotes();
@@ -52,7 +54,9 @@ public class MainServiceImpl implements IMainService {
         List<NoteBook> resultNoteBooks = getDiffNoteBooks(noteBookList, dbNoteBookList);
         List<Note> resultNotes = getDiffNotes(noteList, dbNoteList);
         NoteAndBookList nab = new NoteAndBookList(resultNoteBooks, resultNotes, userId);
-        return ResponseUtil.parseSuccessRespJson(nab);
+        String resString = JSON.toJSONString(nab);
+        mLogger.debug("返回给客户端数据 = " + resString);
+        return resString;
     }
 
     /**
@@ -146,9 +150,15 @@ public class MainServiceImpl implements IMainService {
      */
     private List<NoteBook> getDiffNoteBooks(List<NoteBook> noteBooks, List<NoteBook> dbNoteBooks) {
         List<NoteBook> resultList = new ArrayList<NoteBook>();
+        Map<Long, Integer> maps = new HashMap<Long, Integer>();
+        for (NoteBook nb : noteBooks) {
+            if (!nb.getId().equals(1L)) {
+                maps.put(nb.getId(), 1);
+            }
+        }
         for (NoteBook dbNoteBook : dbNoteBooks) {
-            for (NoteBook nb : noteBooks) {
-                if (!dbNoteBook.getId().equals(nb.getId())) {
+            if (!dbNoteBook.getId().equals(1L)) {
+                if (maps.get(dbNoteBook.getId()) == null) {
                     resultList.add(dbNoteBook);
                 }
             }
@@ -168,11 +178,13 @@ public class MainServiceImpl implements IMainService {
         if (notes.size() == 0) {
             return dbNotes;
         }
+        Map<Long, Note> map = new HashMap<Long, Note>();
+        for (Note note : notes) {
+            map.put(note.getId(), note);
+        }
         for (Note dbNote : dbNotes) {
-            for (Note n : notes) {
-                if (!n.getId().equals(dbNote.getId())) {
-                    resultList.add(dbNote);
-                }
+            if (map.get(dbNote.getId()) == null) {
+                resultList.add(dbNote);
             }
         }
         return resultList;
