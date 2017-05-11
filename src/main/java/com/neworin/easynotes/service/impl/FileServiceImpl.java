@@ -60,7 +60,7 @@ public class FileServiceImpl implements IFileService {
         User user = mUserMapper.selectByPrimaryKey(Long.parseLong(user_id));
         mLogger.debug("用户id= " + user_id + " 获取头像");
         String path;
-        if (null == user || user.getAvatarurl().equals("")) {
+        if (null == user.getAvatarurl()) {
             mLogger.debug("该用户无头像，使用默认头像");
             path = Constants.DEFAULT_AVATAR_PATH;
         } else {
