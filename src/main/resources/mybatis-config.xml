@@ -9,5 +9,6 @@
         <mapper resource="mappers/LoginRecordsMapper.xml"/>
         <mapper resource="mappers/NoteMapper.xml"/>
         <mapper resource="mappers/NoteBookMapper.xml"/>
+        <mapper resource="mappers/NoteImageMapper.xml"/>
     </mappers>
 </configuration>
