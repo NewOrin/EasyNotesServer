@@ -11,6 +11,8 @@ public class Constants {
 
     public static final String AVATAR_FILE_PATH = "H:\\EasyNotes\\avatar";
 
+    public static final String IMAGE_FILE_PATH = "H:\\EasyNotes\\images";
+
     public static final String DEFAULT_AVATAR_PATH = "H:\\EasyNotes\\avatar\\default_avatar.png";
 
     public static final int STATUS_DEFAULT = 0; //默认

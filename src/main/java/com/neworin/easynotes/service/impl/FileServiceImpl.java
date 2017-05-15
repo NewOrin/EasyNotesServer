@@ -1,9 +1,13 @@
 package com.neworin.easynotes.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.neworin.easynotes.dao.NoteImageMapper;
 import com.neworin.easynotes.dao.UserMapper;
+import com.neworin.easynotes.model.NoteImage;
 import com.neworin.easynotes.model.User;
 import com.neworin.easynotes.model.UserExample;
 import com.neworin.easynotes.service.IFileService;
+import com.neworin.easynotes.service.INoteImageService;
 import com.neworin.easynotes.utils.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,8 +28,10 @@ public class FileServiceImpl implements IFileService {
     Logger mLogger = LoggerFactory.getLogger(FileServiceImpl.class);
     @Resource
     private UserMapper mUserMapper;
+    @Resource
+    private INoteImageService mNoteImageServiceImpl;
 
-    public String fileSave(MultipartFile file, String desc) {
+    public String avatarSave(MultipartFile file, String desc) {
         String fileName = file.getOriginalFilename(); // 处理保存的文件名
         mLogger.debug("用户id = " + desc + " 的文件保存 = " + fileName);
         File destFile = new File(Constants.AVATAR_FILE_PATH, fileName); // 创建要保存的文件
@@ -68,5 +74,25 @@ public class FileServiceImpl implements IFileService {
             path = user.getAvatarurl();
         }
         return new File(path);
+    }
+
+    public String noteImageSave(MultipartFile file, String desc) {
+        String fileName = file.getOriginalFilename(); // 处理保存的文件名
+        mLogger.debug("用户id = " + desc + " 的文件保存 = " + fileName);
+        File destFile = new File(Constants.IMAGE_FILE_PATH, fileName); // 创建要保存的文件
+        if (destFile.exists()) {
+            mLogger.debug("文件已存在无需保存");
+            return Constants.SUCCESS;
+        }
+        destFile.mkdirs();
+        try {
+            file.transferTo(destFile); // 另存为
+            mLogger.debug("文件保存成功 : " + Constants.IMAGE_FILE_PATH + "\\" + fileName);
+            mNoteImageServiceImpl.insertImage(new NoteImage(Long.parseLong(desc), fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+            mLogger.debug("文件保存失败 " + e.getMessage());
+        }
+        return Constants.SUCCESS;
     }
 }

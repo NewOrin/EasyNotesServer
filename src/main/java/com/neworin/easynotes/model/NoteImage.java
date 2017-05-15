@@ -1,6 +1,15 @@
 package com.neworin.easynotes.model;
 
 public class NoteImage {
+
+    public NoteImage() {
+    }
+
+    public NoteImage(Long userId, String imageName) {
+        this.userId = userId;
+        this.imageName = imageName;
+    }
+
     private String imageName;
 
     private Long userId;

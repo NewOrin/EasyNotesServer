@@ -10,7 +10,9 @@ import java.io.File;
  */
 public interface IFileService {
 
-    String fileSave(MultipartFile file, String desc);
+    String avatarSave(MultipartFile file, String desc);
 
     File getUserAvatar(String email);
+
+    String noteImageSave(MultipartFile file,String desc);
 }
