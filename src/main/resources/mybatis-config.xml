@@ -10,5 +10,6 @@
         <mapper resource="mappers/NoteMapper.xml"/>
         <mapper resource="mappers/NoteBookMapper.xml"/>
         <mapper resource="mappers/NoteImageMapper.xml"/>
+        <mapper resource="mappers/FeedBackMapper.xml"/>
     </mappers>
 </configuration>
